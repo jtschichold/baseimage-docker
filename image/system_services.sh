@@ -25,7 +25,16 @@ $minimal_apt_get_install runit
 [ "$DISABLE_SYSLOG" -eq 0 ] && /bd_build/services/syslog-ng/syslog-ng.sh || true
 
 ## Install the SSH server.
-[ "$DISABLE_SSH" -eq 0 ] && /bd_build/services/sshd/sshd.sh || true
+# [ "$DISABLE_SSH" -eq 0 ] && /bd_build/services/sshd/sshd.sh || true
 
 ## Install cron daemon.
 [ "$DISABLE_CRON" -eq 0 ] && /bd_build/services/cron/cron.sh || true
+
+## Install redis
+/bd_build/services/redis/redis.sh
+
+## Install collectd
+/bd_build/services/collectd/collectd.sh
+
+## Install nginx
+/bd_build/services/nginx/nginx.sh
