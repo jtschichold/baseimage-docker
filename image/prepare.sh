@@ -38,10 +38,16 @@ $minimal_apt_get_install apt-transport-https ca-certificates
 $minimal_apt_get_install software-properties-common
 
 ## Insall acl
-$minimal_apt_get_install acl
+$minimal_apt_get_install acl sudo
 
 ## Upgrade all packages.
 apt-get dist-upgrade -y --no-install-recommends -o Dpkg::Options::="--force-confold"
+
+# Install MineMeld APT Key and repo
+$minimal_apt_get_install wget
+wget -qO - https://minemeld-updates.panw.io/gpg.key | sudo apt-key add -
+add-apt-repository "deb http://minemeld-updates.panw.io/ubuntu xenial-minemeld-unstable main"
+apt-get update
 
 ## Fix locale.
 $minimal_apt_get_install language-pack-en

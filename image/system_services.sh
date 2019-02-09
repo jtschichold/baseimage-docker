@@ -38,3 +38,6 @@ $minimal_apt_get_install runit
 
 ## Install nginx
 /bd_build/services/nginx/nginx.sh
+
+## Install minemeld
+/bd_build/services/minemeld/minemeld.sh
