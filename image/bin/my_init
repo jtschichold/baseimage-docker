@@ -301,6 +301,18 @@ def wait_for_runit_or_interrupt(pid):
 
 
 def shutdown_runit_services(quiet=False):
+    if os.path.isdir('/etc/service/minemeld'):
+        debug('Shutting down minemeld...')
+
+        os.system("/usr/bin/sv down /etc/service/minemeld")
+
+        done = False
+        while not done:
+            done = os.system("/usr/bin/sv status /etc/service/minemeld | grep -q '^run:'") != 0
+            if not done:
+                debug('Service minemeld still running...')
+                time.sleep(1.0)
+
     if not quiet:
         debug("Begin shutting down runit services...")
     os.system("/usr/bin/sv -w %d down /etc/service/* > /dev/null" % KILL_PROCESS_TIMEOUT)

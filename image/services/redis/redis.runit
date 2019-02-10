@@ -14,7 +14,6 @@ fi
 ## force ownership
 chown redis:redis /opt/minemeld/local/redis
 chown redis:redis /var/run/redis
-setfacl -Rdm g:minemeld:rwx /var/run/redis
 
 echo "Starting redis-server..."
 exec /usr/bin/redis-server /etc/redis/redis.conf --daemonize no

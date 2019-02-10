@@ -52,7 +52,11 @@ fi
 cp /usr/share/minemeld/config/api/10-defaults.yml /opt/minemeld/local/config/api
 
 # delete candidate config to force reload of running config
-/usr/bin/redis-cli del "mm:config:candidate"
+/usr/bin/redis-cli  -s /var/run/redis/redis.sock del "mm:config:candidate"
+
+# set socket permission
+setfacl -Rdm g:minemeld:rwx /var/run/redis
+setfacl -m g:minemeld:rwx /var/run/redis/redis.sock
 
 # check if PID DIR exists (from rabbitmq init script)
 PIDDIR=$(dirname $PIDFILE)
@@ -61,6 +65,8 @@ if [ ! -d ${PIDDIR} ] ; then
 	chown -R minemeld:minemeld ${PIDDIR}
 	chmod 755 ${PIDDIR}
 fi
+
+export REDIS_URL=unix:///var/run/redis/redis.sock
 
 echo "Starting minemeld..."
 exec /opt/minemeld/engine/current/bin/supervisord -u minemeld -n -c ${CONFIGFILE} --pidfile ${PIDFILE}

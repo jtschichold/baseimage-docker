@@ -15,4 +15,7 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
+EXPOSE 443
+VOLUME ["/opt/minemeld/local/"]
+
 CMD ["/sbin/my_init"]
